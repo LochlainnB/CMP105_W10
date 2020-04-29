@@ -4,6 +4,7 @@
 #include "Framework/Input.h"
 #include "Framework/TileMap.h"
 #include "TileSet.h"
+#include "Player.h"
 #include <string>
 #include <iostream>
 

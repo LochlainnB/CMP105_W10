@@ -7,9 +7,6 @@ TileSet::TileSet() {
 	//terrain
 	textures.push_back(sf::Texture());
 	textures[0].loadFromFile("gfx/marioTiles.png");
-	//player
-	textures.push_back(sf::Texture());
-	textures[1].loadFromFile("gfx/MushroomTrans.png");
 
 	//setup properties and add to tiles
 	for (int i = 0; i < 72; i++) {
@@ -31,11 +28,6 @@ TileSet::TileSet() {
 			tiles[(i * 12) + j].setTextureRect(sf::IntRect(j * 17, i * 17, 16, 16));
 		}
 	}
-
-	//player
-	Player player;
-	player.setTexture(&textures[1]);
-	tiles.push_back(player);
 }
 
 TileSet::~TileSet() {

@@ -8,6 +8,8 @@ Player::Player() {
 	setName("Player");
 	acceleration = sf::Vector2f(0, 980);
 	setAlive(true);
+	texture.loadFromFile("gfx/MushroomTrans.png");
+	setTexture(&texture);
 }
 
 Player::~Player() {
@@ -27,31 +29,30 @@ sf::Vector2f Player::getAcceleration() {
 }
 
 void Player::handleInput(float dt) {
-	std::cout << "handling input" << "\n";
 	//gravity
 	velocity += acceleration * dt;
 	//movement
 	velocity.x = 0;
 	if (input->isKeyDown(22)) {
-		velocity.y = -200;
+		velocity.y = -400;
 		input->setKeyUp(22);
 	}
 	if (input->isKeyDown(0)) {
-		velocity.x = -100;
+		velocity.x = -200;
 	}
 	else if (input->isKeyDown(3)) {
-		velocity.x = 100;
+		velocity.x = 200;
 	}
 }
 
 void Player::update(float dt) {
-	setPosition(getPosition() + velocity);
+	setPosition(getPosition() + velocity * dt);
 
 	//check collisions
-	for (int i = 0; i < entities->size(); i++) {
-		if ((*entities)[i].getName() == "Terrain" && (*entities)[i].isCollider()) {
-			if (Collision::checkBoundingBox(this, &(*entities)[i])) {
-				collisionResponse(&(*entities)[i]);
+	for (int i = 0; i < tiles->size(); i++) {
+		if ((*tiles)[i].getName() == "Terrain" && (*tiles)[i].isCollider()) {
+			if (Collision::checkBoundingBox(this, &(*tiles)[i])) {
+				collisionResponse(&(*tiles)[i]);
 			}
 		}
 	}
@@ -101,23 +102,26 @@ void Player::collisionResponse(GameObject* other) {
 		}
 		float overlapY = lowestHighY - highestLowY;
 
-		if (overlapX > overlapY) {
-			//check top or bottom
-			if (getPosition().y + getCollisionBox().top + getCollisionBox().height/2 > other->getPosition().y + other->getCollisionBox().top + other->getCollisionBox().height/2) {
-				setPosition(getPosition().x, (other->getPosition().y + other->getCollisionBox().top + other->getCollisionBox().height) - getCollisionBox().top);
+		if (overlapX < overlapY) {
+			//check left or right
+			if (getPosition().x + (getCollisionBox().left - getPosition().y) + getCollisionBox().width / 2 > other->getPosition().x + (other->getCollisionBox().left - other->getPosition().y) + other->getCollisionBox().width / 2) {
+				setPosition((other->getCollisionBox().left + other->getCollisionBox().width) - (getCollisionBox().left - getPosition().x), getPosition().y);
 			}
 			else {
-				setPosition(getPosition().x, other->getPosition().y - (getCollisionBox().top + getCollisionBox().height));
+				setPosition(other->getCollisionBox().left - other->getCollisionBox().width, getPosition().y);
 			}
+			velocity.x = 0;
+			
 		}
 		else {
-			//check left or right
-			if (getPosition().x + getCollisionBox().left + getCollisionBox().width / 2 > other->getPosition().x + other->getCollisionBox().left + other->getCollisionBox().width / 2) {
-				setPosition((other->getPosition().x + other->getCollisionBox().left + other->getCollisionBox().width) - getCollisionBox().left, getPosition().y);
+			//check top or bottom
+			if (getPosition().y + (getCollisionBox().top - getPosition().x) + getCollisionBox().height / 2 > other->getPosition().y + (other->getCollisionBox().top - other->getPosition().x) + other->getCollisionBox().height / 2) {
+				setPosition(getPosition().x, (other->getCollisionBox().top + other->getCollisionBox().height) - (getCollisionBox().top - getPosition().y));
 			}
 			else {
-				setPosition(other->getPosition().x - (getCollisionBox().left + getCollisionBox().width), getPosition().y);
+				setPosition(getPosition().x, other->getCollisionBox().top - other->getCollisionBox().height);
 			}
+			velocity.y = 0;
 		}
 	}
 }

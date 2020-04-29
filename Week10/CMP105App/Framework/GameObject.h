@@ -41,7 +41,8 @@ public:
 
 	// Extra setting stuff for compatibility with manager
 	void setWindow(sf::RenderWindow* window);
-	void setEntities(std::vector<GameObject>* ballManager);
+	void setEntities(std::vector<GameObject*>* entities);
+	void setTiles(std::vector<GameObject>* tiles);
 
 	// Set name of entity
 	void setName(std::string name);
@@ -63,7 +64,8 @@ protected:
 
 	// Window and entities
 	sf::RenderWindow* window;
-	std::vector<GameObject>* entities;
+	std::vector<GameObject*>* entities;
+	std::vector<GameObject>* tiles;
 
 	// Name
 	std::string name;

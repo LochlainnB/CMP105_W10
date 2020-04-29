@@ -16,4 +16,5 @@ public:
 	void collisionResponse(GameObject* other);
 protected:
 	sf::Vector2f acceleration;
+	sf::Texture texture;
 };

@@ -8,11 +8,12 @@ Level::Level(sf::RenderWindow* hwnd, Input* in)
 	// initialise game objects
 	manager.setInput(input);
 	manager.setWindow(window);
+	manager.spawn(new Player);
 	tileMap.setManager(&manager);
 	tileMap.setTileSize(32, 32);
 	tileMap.setTileSet(tileSet.getTiles());
 	std::vector<int> map {
-	72, 47, 47, 47, 47,
+	47, 47, 47, 47, 47,
 	47, 47, 3, 47, 47,
 	0, 1, 13, 1, 2,
 	12, 13, 13, 13, 14,

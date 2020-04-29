@@ -56,8 +56,12 @@ void GameObject::setWindow(sf::RenderWindow* window) {
 	this->window = window;
 }
 
-void GameObject::setEntities(std::vector<GameObject>* entities) {
+void GameObject::setEntities(std::vector<GameObject*>* entities) {
 	this->entities = entities;
+}
+
+void GameObject::setTiles(std::vector<GameObject>* tiles) {
+	this->tiles = tiles;
 }
 
 void GameObject::setName(std::string name) {

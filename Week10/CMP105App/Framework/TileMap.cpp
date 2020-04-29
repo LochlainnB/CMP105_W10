@@ -49,7 +49,7 @@ void TileMap::buildLevel()
 			x = i % mapSize.x;
 			y = (int)floor(i / mapSize.x);
 			tileSet[tileMap[i]].setPosition(position.x + (x * tileSize.x), position.y + (y * tileSize.y));
-			manager->spawn(tileSet[tileMap[i]]);
+			manager->spawnTile(tileSet[tileMap[i]]);
 		}
 	}
 }
