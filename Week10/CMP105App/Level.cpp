@@ -6,7 +6,21 @@ Level::Level(sf::RenderWindow* hwnd, Input* in)
 	input = in;
 
 	// initialise game objects
-
+	manager.setInput(input);
+	manager.setWindow(window);
+	tileMap.setManager(&manager);
+	tileMap.setTileSize(32, 32);
+	tileMap.setTileSet(tileSet.getTiles());
+	std::vector<int> map {
+	72, 47, 47, 47, 47,
+	47, 47, 3, 47, 47,
+	0, 1, 13, 1, 2,
+	12, 13, 13, 13, 14,
+	12, 13, 13, 13, 14
+	};
+	tileMap.setTileMap(map, sf::Vector2u(5, 5));
+	tileMap.setPosition(sf::Vector2f(0, 408));
+	tileMap.buildLevel();
 }
 
 Level::~Level()
@@ -17,20 +31,20 @@ Level::~Level()
 // handle user input
 void Level::handleInput(float dt)
 {
-
+	manager.handleInput(dt);
 }
 
 // Update game objects
 void Level::update(float dt)
 {
-	
+	manager.update(dt);
 }
 
 // Render level
 void Level::render()
 {
 	beginDraw();
-
+	manager.render();
 	endDraw();
 }
 

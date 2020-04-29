@@ -7,6 +7,7 @@
 #pragma once
 #include "SFML\Graphics.hpp"
 #include "Input.h"
+#include <string>
 
 class GameObject : public sf::RectangleShape
 {
@@ -38,6 +39,16 @@ public:
 	// Set the input component
 	void setInput(Input* in) { input = in; };
 
+	// Extra setting stuff for compatibility with manager
+	void setWindow(sf::RenderWindow* window);
+	void setEntities(std::vector<GameObject>* ballManager);
+
+	// Set name of entity
+	void setName(std::string name);
+
+	// Get name of entity
+	std::string getName();
+
 protected:
 	// Sprite properties
 	sf::Vector2f velocity;
@@ -49,4 +60,11 @@ protected:
 
 	// input component
 	Input* input;
+
+	// Window and entities
+	sf::RenderWindow* window;
+	std::vector<GameObject>* entities;
+
+	// Name
+	std::string name;
 };

@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 #include "Framework/Input.h"
+#include "Framework/TileMap.h"
+#include "TileSet.h"
 #include <string>
 #include <iostream>
 
@@ -23,4 +25,7 @@ private:
 	// Default variables for level class.
 	sf::RenderWindow* window;
 	Input* input;
+	Manager manager;
+	TileSet tileSet;
+	TileMap tileMap;
 };
